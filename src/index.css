@@ -29,7 +29,9 @@ a {
   background-color: #FC1503 !important;
   color: white !important;
 }
-
+.category-btn span:first-child{
+  margin-right: 10px;
+}
 .category-btn:hover span{
   color: white !important;
 }
