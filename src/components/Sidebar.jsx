@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Stack } from "@mui/material";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
 import HomeIcon from "@mui/icons-material/Home";
@@ -32,32 +33,35 @@ const categories = [
   { name: "Crypto", icon: <DeveloperModeIcon /> },
 ];
 
-const selectedCategory = "New";
-
-const Sidebar = () => (
-  <Stack
-    direction="row"
-    sx={{
-      overflowY: "auto",
-      height: { sx: "auto", md: "95%" },
-      flexDirection: { md: "column" },
-    }}
-  >
-    {categories.map((category) => (
-      <button
-        key={category.name}
-        className="category-btn"
-        style={{
-          backgroundColor: category.name === selectedCategory && "#FC1503",
-          color: "#fff",
-          opacity: category.name === selectedCategory ? "1" : ".8",
-        }}
-      >
-        <span>{category.icon}</span>
-        <span>{category.name}</span>
-      </button>
-    ))}
-  </Stack>
-);
+const Sidebar = ({ selectedCategory, setSelectedCategory }) => {
+  return (
+    <Stack
+      direction="row"
+      sx={{
+        overflowY: "auto",
+        height: { sx: "auto", md: "95%" },
+        flexDirection: { md: "column" },
+      }}
+    >
+      {categories.map((category) => (
+        <button
+          onClick={() => {
+            setSelectedCategory(category.name);
+          }}
+          key={category.name}
+          className="category-btn"
+          style={{
+            backgroundColor: category.name === selectedCategory && "#FC1503",
+            color: "#fff",
+            opacity: category.name === selectedCategory ? "1" : ".8",
+          }}
+        >
+          <span>{category.icon}</span>
+          <span>{category.name}</span>
+        </button>
+      ))}
+    </Stack>
+  );
+};
 
 export default Sidebar;
