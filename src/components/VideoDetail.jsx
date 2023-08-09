@@ -5,12 +5,12 @@ import ReactPlayer from "react-player";
 import { Typography, Box, Stack } from "@mui/material";
 import { CheckCircle } from "@mui/icons-material";
 
-// import { Video } from "./";
+import { Videos } from "./";
 import { fetchFromApi } from "../utils/fetchFromApi,js";
 
 const VideoDetail = () => {
   const [VideoDetail, setVideoDetail] = useState(null);
-  const [Videos, setVideos] = useState([]);
+  const [videos, setVideos] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
@@ -18,15 +18,16 @@ const VideoDetail = () => {
       setVideoDetail(data?.items[0]);
     });
 
-    fetchFromApi(`videos?part=snippet&relatedVideos=${id}&type=video`).then(
-      (data) => {
-        setVideos(data.items);
-      }
-    );
+    fetchFromApi(
+      `search?relatedToVideoId=${id}&part=id%2Csnippet&type=video&maxResults=10`
+    ).then((data) => {
+      console.log(data);
+      setVideos(data.items);
+    });
   }, [id]);
-  console.log(VideoDetail);
+  console.log(videos);
 
-  if (VideoDetail === null) return "loading";
+  if (VideoDetail === null || videos.length === 0) return "loading";
 
   const {
     snippet: { title, channelId, channelTitle },
@@ -48,6 +49,8 @@ const VideoDetail = () => {
             }}
           >
             <ReactPlayer
+              playing="true"
+              // muted="true"
               className="react-player"
               controls
               url={`https://www.youtube.com/watch?v=${id}`}
@@ -88,6 +91,17 @@ const VideoDetail = () => {
               </Stack>
             </Stack>
           </Box>
+        </Box>
+        <Box
+          px={2}
+          py={{ md: 1, xs: 5 }}
+          justifyContent="center"
+          alignItems="center"
+          sx={{
+            margin: "0 16px",
+          }}
+        >
+          <Videos videos={videos} direction="column" />
         </Box>
       </Stack>
     </Box>

@@ -53,7 +53,7 @@ const SearchFeed = () => {
           {selectedCategory}
           <span style={{ color: "#f31503" }}> Videos</span>
         </Typography>
-        <Videos videos={videos} />
+        <Videos videos={videos}  />
       </Box>
     </Stack>
   );
